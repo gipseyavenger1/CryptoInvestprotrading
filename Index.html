@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoInvest Pro | Secure Crypto Investing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --gray: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-attachment: fixed;
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background-color: #e67e22;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .page {
+            display: none;
+            padding: 2rem 0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .form-container {
+            max-width: 450px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+            background: white;
+        }
+        
+        .form-error {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+            font-weight: 500;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+        
+        .portfolio-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 1.5rem 0;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .crypto-list {
+            list-style: none;
+        }
+        
+        .crypto-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+        
+        .crypto-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .crypto-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .crypto-value {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .alert {
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #fff;
+            border-left: 4px solid var(--success);
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #fff;
+            border-left: 4px solid var(--danger);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: var(--light);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .feature-card p {
+            color: var(--light);
+        }
+        
+        footer {
+            background-color: rgba(44, 62, 80, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+        
+        .chart-container {
+            height: 200px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: var(--secondary);
+            margin: 0 2px;
+            border-radius: 3px 3px 0 0;
+            transform-origin: bottom;
+            animation: grow 1.5s ease-out;
+        }
+        
+        @keyframes grow {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+        
+        .asset-change {
+            font-size: 0.9rem;
+        }
+        
+        .change-up {
+            color: var(--success);
+        }
+        
+        .change-down {
+            color: var(--danger);
+        }
+        
+        .user-welcome {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .user-email {
+            color: var(--accent);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                    <span>CryptoInvest Pro</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="market">Market</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                    <li id="auth-links">
+                        <!-- Dynamically populated based on auth status -->
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Invest in Crypto with Confidence</h1>
+                <p>Join thousands of investors who use CryptoInvest Pro to manage their cryptocurrency portfolio.</p>
+                <a href="#" class="btn btn-accent" data-page="register">Get Started</a>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Tracking</h3>
+                    <p>Monitor your investments with live price updates and portfolio performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Storage</h3>
+                    <p>Your data is encrypted and secure with our advanced protection systems.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Expert Insights</h3>
+                    <p>Access market analysis and trends to make informed investment decisions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="register" class="page">
+            <div class="form-container">
+                <h2 class="form-title">Create Account</h2>
+                <div id="register-alert"></div>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required>
+                        <div class="form-error" id="name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required>
+                        <div class="form-error" id="email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                        <div class="form-error" id="password-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" required>
+                        <div class="form-error" id="confirm-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width: 100%;">Register</button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem;">
+                    Already have an account? <a href="#" data-page="login" style="color: var(--accent);">Log In</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login" class="page">
+            <div class="form-container">
+                <h2 class="form-title">Log In</h2>
+                <div id="login-alert"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width: 100%;">Log In</button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem;">
+                    Don't have an account? <a href="#" data-page="register" style="color: var(--accent);">Register</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <h2>Your Portfolio</h2>
+            <div id="profile-alert"></div>
+            
+            <div class="dashboard">
+                <div class="sidebar">
+                    <div class="card">
+                        <h3 class="card-title">Account Summary</h3>
+                        <div id="user-info">
+                            <!-- Dynamically populated with user data -->
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Quick Actions</h3>
+                        <button class="btn" style="width: 100%; margin-bottom: 0.8rem;">
+                            <i class="fas fa-plus-circle"></i> Deposit
+                        </button>
+                        <button class="btn" style="width: 100%; margin-bottom: 0.8rem;">
+                            <i class="fas fa-minus-circle"></i> Withdraw
+                        </button>
+                        <button class="btn btn-accent" style="width: 100%;">
+                            <i class="fas fa-exchange-alt"></i> Trade
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="main-content">
+                    <div class="card">
+                        <h3 class="card-title">Portfolio Value</h3>
+                        <div class="portfolio-value" id="portfolio-value">$0.00</div>
+                        
+                        <div class="chart-container">
+                            <div class="chart">
+                                <div class="chart-bar" style="height: 65%;"></div>
+                                <div class="chart-bar" style="height: 40%;"></div>
+                                <div class="chart-bar" style="height: 75%;"></div>
+                                <div class="chart-bar" style="height: 35%;"></div>
+                                <div class="chart-bar" style="height: 60%;"></div>
+                                <div class="chart-bar" style="height: 80%;"></div>
+                                <div class="chart-bar" style="height: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title">Your Assets</h3>
+                        <ul class="crypto-list" id="crypto-assets">
+                            <!-- Dynamically populated with crypto assets -->
+                            <li class="crypto-item">
+                                <span class="crypto-name">
+                                    <i class="fab fa-bitcoin crypto-icon"></i>
+                                    <span>Bitcoin (BTC)</span>
+                                </span>
+                                <span class="crypto-value">0.0000 ($0.00)</span>
+                            </li>
+                            <li class="crypto-item">
+                                <span class="crypto-name">
+                                    <i class="fab fa-ethereum crypto-icon"></i>
+                                    <span>Ethereum (ETH)</span>
+                                </span>
+                                <span class="crypto-value">0.0000 ($0.00)</span>
+                            </li>
+                            <li class="crypto-item">
+                                <span class="crypto-name">
+                                    <i class="fas fa-coins crypto-icon"></i>
+                                    <span>Litecoin (LTC)</span>
+                                </span>
+                                <span class="crypto-value">0.0000 ($0.00)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Page -->
+        <div id="market" class="page">
+            <h2>Market Overview</h2>
+            <div class="card">
+                <h3 class="card-title">Top Cryptocurrencies</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid rgba(255,255,255,0.1);">
+                                <th style="text-align: left; padding: 1.2rem;">Name</th>
+                                <th style="text-align: right; padding: 1.2rem;">Price</th>
+                                <th style="text-align: right; padding: 1.2rem;">24h Change</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crypto-table">
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 1.2rem;">
+                                    <i class="fab fa-bitcoin" style="color: #f39c12; margin-right: 10px;"></i>
+                                    Bitcoin (BTC)
+                                </td>
+                                <td style="text-align: right; padding: 1.2rem;">$40,000</td>
+                                <td style="text-align: right; padding: 1.2rem;" class="change-up">+2.5%</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 1.2rem;">
+                                    <i class="fab fa-ethereum" style="color: #3498db; margin-right: 10px;"></i>
+                                    Ethereum (ETH)
+                                </td>
+                                <td style="text-align: right; padding: 1.2rem;">$3,000</td>
+                                <td style="text-align: right; padding: 1.2rem;" class="change-up">+1.8%</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 1.2rem;">
+                                    <i class="fas fa-coins" style="color: #bdc3c7; margin-right: 10px;"></i>
+                                    Litecoin (LTC)
+                                </td>
+                                <td style="text-align: right; padding: 1.2rem;">$150</td>
+                                <td style="text-align: right; padding: 1.2rem;" class="change-down">-0.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <h2>About CryptoInvest Pro</h2>
+            <div class="card">
+                <p>CryptoInvest Pro is a platform designed to help investors manage their cryptocurrency portfolios with ease and confidence.</p>
+                <p>Our mission is to make crypto investing accessible to everyone by providing powerful tools in a simple, intuitive interface.</p>
+                <h3 style="margin-top: 1.5rem; color: var(--accent);">Our Features</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.8rem;">
+                    <li>Real-time portfolio tracking</li>
+                    <li>Secure account management</li>
+                    <li>Market insights and analytics</li>
+                    <li>24/7 customer support</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                    <span>CryptoInvest Pro</span>
+                </div>
+                <p>&copy; 2023 CryptoInvest Pro. All rights reserved.</p>
+                <p>This is a demonstration website for portfolio purposes only.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const authLinksContainer = document.getElementById('auth-links');
+        const registerForm = document.getElementById('register-form');
+        const loginForm = document.getElementById('login-form');
+        const registerAlert = document.getElementById('register-alert');
+        const loginAlert = document.getElementById('login-alert');
+        const profileAlert = document.getElementById('profile-alert');
+        const userInfoContainer = document.getElementById('user-info');
+        
+        // Check authentication status on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            
+            // Check if we're redirected to profile after login
+            const token = localStorage.getItem('authToken');
+            if (token && window.location.hash === '#profile') {
+                showPage('profile');
+            }
+        });
+        
+        // Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = e.target.getAttribute('data-page');
+                showPage(page);
+            });
+        });
+        
+        // Show specific page
+        function showPage(pageId) {
+            // Check if page requires authentication
+            if (pageId === 'profile') {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    showPage('login');
+                    showAlert(loginAlert, 'Please log in to access your profile', 'danger');
+                    return;
+                }
+            }
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // If showing profile, update user info
+            if (pageId === 'profile') {
+                updateUserInfo();
+            }
+        }
+        
+        // Update authentication UI
+        function updateAuthUI() {
+            const token = localStorage.getItem('authToken');
+            
+            if (token) {
+                authLinksContainer.innerHTML = `
+                    <li><a href="#" data-page="profile">Profile</a></li>
+                    <li><a href="#" id="logout-btn">Logout</a></li>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', logout);
+            } else {
+                authLinksContainer.innerHTML = `
+                    <li><a href="#" data-page="login">Login</a></li>
+                    <li><a href="#" data-page="register" class="btn">Register</a></li>
+                `;
+                // Add event listeners to new auth links
+                const newAuthLinks = authLinksContainer.querySelectorAll('[data-page]');
+                newAuthLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = e.target.getAttribute('data-page');
+                        showPage(page);
+                    });
+                });
+            }
+        }
+        
+        // Register form submission
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            // Simple validation
+            if (password !== confirm) {
+                showAlert(registerAlert, 'Passwords do not match', 'danger');
+                return;
+            }
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userExists = users.find(user => user.email === email);
+            
+            if (userExists) {
+                showAlert(registerAlert, 'User with this email already exists', 'danger');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                email,
+                password, // In a real app, this would be hashed
+                portfolio: {
+                    totalValue: 10000, // Default starting balance
+                    assets: [
+                        { name: 'Bitcoin (BTC)', amount: 0.25, value: 10000 },
+                        { name: 'Ethereum (ETH)', amount: 0, value: 0 },
+                        { name: 'Litecoin (LTC)', amount: 0, value: 0 }
+                    ]
+                }
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showAlert(registerAlert, 'Registration successful! Please log in.', 'success');
+            registerForm.reset();
+            
+            // Redirect to login after a delay
+            setTimeout(() => {
+                showPage('login');
+            }, 1500);
+        });
+        
+        // Login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Check credentials
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (!user) {
+                showAlert(loginAlert, 'Invalid email or password', 'danger');
+                return;
+            }
+            
+            // Create auth token (in a real app, this would be a JWT from the server)
+            const authToken = btoa(JSON.stringify({
+                id: user.id,
+                email: user.email,
+                timestamp: Date.now()
+            }));
+            
+            // Store token
+            localStorage.setItem('authToken', authToken);
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            showAlert(loginAlert, 'Login successful! Redirecting...', 'success');
+            
+            // Update UI and redirect
+            updateAuthUI();
+            
+            setTimeout(() => {
+                showPage('profile');
+            }, 1000);
+        });
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showPage('home');
+            
+            // Show logout confirmation if we were on profile
+            if (window.location.hash === '#profile') {
+                showAlert(profileAlert, 'You have been logged out successfully', 'success');
+            }
+        }
+        
+        // Update user info on profile page
+        function updateUserInfo() {
+            const userJson = localStorage.getItem('currentUser');
+            if (!userJson) return;
+            
+            const user = JSON.parse(userJson);
+            
+            userInfoContainer.innerHTML = `
+                <p class="user-welcome">Welcome back, <span style="color: var(--accent);">${user.name}</span>!</p>
+                <p><strong>Email:</strong> <span class="user-email">${user.email}</span></p>
+                <p><strong>Member Since:</strong> ${new Date(parseInt(user.id)).toLocaleDateString()}</p>
+            `;
+            
+            document.getElementById('portfolio-value').textContent = `$${user.portfolio.totalValue.toLocaleString()}`;
+            
+            // Update assets list
+            const assetsList = document.getElementById('crypto-assets');
+            assetsList.innerHTML = '';
+            
+            user.portfolio.assets.forEach(asset => {
+                if (asset.value > 0) {
+                    const iconClass = asset.name.includes('Bitcoin') ? 'fab fa-bitcoin' : 
+                                      asset.name.includes('Ethereum') ? 'fab fa-ethereum' : 'fas fa-coins';
+                    
+                    assetsList.innerHTML += `
+                        <li class="crypto-item">
+                            <span class="crypto-name">
+                                <i class="${iconClass} crypto-icon"></i>
+                                <span>${asset.name}</span>
+                            </span>
+                            <span class="crypto-value">${asset.amount.toFixed(4)} ($${asset.value.toLocaleString()})</span>
+                        </li>
+                    `;
+                }
+            });
+        }
+        
+        // Show alert message
+        function showAlert(container, message, type) {
+            container.innerHTML = `
+                <div class="alert alert-${type}">
+                    ${message}
+                </div>
+            `;
+            
+            // Clear alert after 3 seconds
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 3000);
+        }
+        
+        // Handle page routing based on URL hash
+        window.addEventListener('hashchange', () => {
+            const pageId = window.location.hash.substring(1) || 'home';
+            showPage(pageId);
+        });
+        
+        // Initialize page based on URL hash
+        const initialPage = window.location.hash.substring(1) || 'home';
+        showPage(initialPage);
+    </script>
+</body>
+</html>
